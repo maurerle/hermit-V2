@@ -9,19 +9,19 @@
 </media:content>
 {{- end -}}
 {{- else if findRE `^\/.*` $path 1 -}}
-{{ $path := printf "%s%s" .Site.BaseURL (strings.TrimLeft "/" $path) }}
+{{ $path := printf "%s%s" ($.Site.BaseURL | default "http://localhost:1313/") (strings.TrimLeft "/" $path) }}
 			{{- with resources.GetRemote $path -}}
-			<enclosure url="{{ .Permalink }}" length="" type="{{ .MediaType }}" />
-			<media:thumbnail url="{{ .Permalink }}" width="{{ .Width}}" height="{{ .Height}}" />
-			<media:content url="{{ .Permalink }}" medium="{{ .MediaType.MainType }}" type="{{ .MediaType}}" width="{{ .Width}}" height="{{ .Height}}" >
+			<enclosure url="{{ .RelPermalink | absURL }}" length="" type="{{ .MediaType }}" />
+			<media:thumbnail url="{{ .RelPermalink | absURL }}" width="{{ .Width}}" height="{{ .Height}}" />
+			<media:content url="{{ .RelPermalink | absURL }}" medium="{{ .MediaType.MainType }}" type="{{ .MediaType}}" width="{{ .Width}}" height="{{ .Height}}" >
 			    <media:title type="html">{{ . }}</media:title>
 			</media:content>
 			{{- end -}}
 {{- else -}}
 			{{- with resources.GetRemote . -}}
-			<enclosure url="{{ .Permalink }}" length="" type="{{ .MediaType }}" />
-			<media:thumbnail url="{{ .Permalink }}" width="{{ .Width}}" height="{{ .Height}}" />
-			<media:content url="{{ .Permalink }}" medium="{{ .MediaType.MainType }}" type="{{ .MediaType}}" width="{{ .Width}}" height="{{ .Height}}" >
+			<enclosure url="{{ .RelPermalink | absURL }}" length="" type="{{ .MediaType }}" />
+			<media:thumbnail url="{{ .RelPermalink | absURL }}" width="{{ .Width}}" height="{{ .Height}}" />
+			<media:content url="{{ .RelPermalink | absURL }}" medium="{{ .MediaType.MainType }}" type="{{ .MediaType}}" width="{{ .Width}}" height="{{ .Height}}" >
 			    <media:title type="html">{{ . }}</media:title>
 			</media:content>
 			{{- end -}}
